@@ -12,6 +12,9 @@ def heuristic(X):
 
 # Function to run the simulation
 def run_simulation(n_iterations, n_points, n_top_results):
+    plt.ion()  # Turn on interactive mode
+    fig, ax = plt.subplots()  # Create a figure and axis
+
     for iteration in range(n_iterations):
         # Generate random data
         X = np.random.rand(n_points, 2) * 100  # Scale to 100 for better range
@@ -22,17 +25,23 @@ def run_simulation(n_iterations, n_points, n_top_results):
         # Get the indices of the top results
         indices = triceps.argsort()[-n_top_results:][::-1]
 
+        # Clear the previous plot
+        ax.clear()
+
         # Plot the original data
-        plt.figure()
-        plt.scatter(X[:, 0], X[:, 1], c="blue", label="Original Data")
+        ax.scatter(X[:, 0], X[:, 1], c="blue", label="Original Data")
 
         # Highlight the top results
-        plt.scatter(X[indices, 0], X[indices, 1], c="red", label="Top Results")
+        ax.scatter(X[indices, 0], X[indices, 1], c="red", label="Top Results")
 
-        plt.title(f"Iteration {iteration + 1}")
-        plt.xlabel("Bench Presses")
-        plt.ylabel("Dips")
-        plt.legend()
+        # Update plot titles and labels
+        ax.set_title(f"Iteration {iteration + 1}")
+        ax.set_xlabel("Bench Presses")
+        ax.set_ylabel("Dips")
+        ax.legend()
+
+        # Pause to update the plot
+        plt.pause(0.1)  # Pause for 1 second
 
         # Generate new data points based on the top results
         top_results = X[indices]
@@ -46,21 +55,9 @@ def run_simulation(n_iterations, n_points, n_top_results):
         # Combine original data with new data points
         X_new = np.vstack([X, new_data_points])
 
-        # Calculate the heuristic for new data points
-        triceps_new = heuristic(X_new)
-
-        # Plot the new data
-        plt.figure()
-        plt.scatter(X_new[:, 0], X_new[:, 1], c="blue", label="All Data")
-        plt.scatter(X[indices, 0], X[indices, 1], c="red", label="Top Results")
-
-        plt.title(f"Iteration {iteration + 1} with New Data")
-        plt.xlabel("Bench Presses")
-        plt.ylabel("Dips")
-        plt.legend()
-
-    plt.show()
+    plt.ioff()  # Turn off interactive mode
+    plt.show()  # Show the final plot
 
 
-# Run the simulation 3 times, with 40 initial points and focusing on the top 5 results
-run_simulation(n_iterations=20, n_points=40, n_top_results=5)
+# Run the simulation 5 times, with 40 initial points and focusing on the top 5 results
+run_simulation(n_iterations=100, n_points=40, n_top_results=5)

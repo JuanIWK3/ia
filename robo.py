@@ -4,8 +4,11 @@ import serial
 import time
 
 # Initialize the serial connection
+ser = serial.Serial("COM3", 9600, timeout=1)
+
 # ser = serial.Serial("COM5", 9600, timeout=1)
 time.sleep(2)  # Allow time for the connection to establish
+
 
 # Initialize the webcam
 cap = cv2.VideoCapture(0)

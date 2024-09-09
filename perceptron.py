@@ -53,22 +53,19 @@ def main():
     r = [0, 0, 0, 1]  # expected results for AND logic
     a = 0.5  # learning rate, increased to speed up learning
 
-    # Initialize plot
     plt.ion()
-    fig, axs = plt.subplots(2, 2, figsize=(10, 8))  # Create a 2x2 grid of subplots
-
+    fig, axs = plt.subplots(2, 2, figsize=(10, 8))
     max_epochs = 1000
     epoch = 0
 
     while epoch < max_epochs:
-        correct_predictions = True  # Assume we're correct until proven otherwise
+        correct_predictions = True
 
         for c in range(len(x1)):
             y = x1[c] * w1 + x2[c] * w2 + b
             output = degrau(y, 0)
             calculation = f"{x1[c]}*{w1:.2f} + {x2[c]}*{w2:.2f} + {b:.2f} = {y:.2f} -> step({y:.2f}) = {output}"
 
-            # Print the results for the current test
             print(f"Test {c + 1}:")
             print(f"Inputs: x1 = {x1[c]}, x2 = {x2[c]}")
             print(f"Calculation: {calculation}")
